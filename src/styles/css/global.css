@@ -1,0 +1,48 @@
+@import "./reset.css";
+@import "./nprogress.css";
+
+html,
+body,
+#app {
+	height: 100%;
+}
+
+html {
+	overflow-x: hidden;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+.ant-table-header::-webkit-scrollbar {
+	background-color: transparent;
+}
+
+html.grayscale {
+	filter: grayscale(100%);
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+::view-transition-old(root),
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+	::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+::view-transition-old(root) {
+	z-index: 9999;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+::view-transition-new(root) {
+	z-index: 1;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+.dark::view-transition-old(root) {
+	z-index: 1;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector:biome don't know root selecter */
+.dark::view-transition-new(root) {
+	z-index: 9999;
+}

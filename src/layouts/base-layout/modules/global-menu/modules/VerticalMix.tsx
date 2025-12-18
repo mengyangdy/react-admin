@@ -1,0 +1,99 @@
+import classNames from "clsx";
+import { createPortal } from "react-dom";
+
+import DarkModeContainer from "@/components/DarkModeContainer";
+import PinToggler from "@/components/PinToggler";
+import { GLOBAL_SIDER_MENU_ID } from "@/constants/app";
+import { routerActions, useRouterStoreState } from "@/store/router";
+import { themeActions, useThemeState } from "@/store/theme";
+
+import GlobalLogo from "../../global-logo";
+import VerticalMenu from "../components/AntdVerticalMenu";
+import FirstLevelMenu from "../components/FirstLevelMenu";
+import { useGetElementById } from "./hook";
+
+const VerticalMix = memo(() => {
+  const routerStore = useRouterStoreState();
+
+  const childLevelMenus = routerStore.childLevelMenus;
+  const themeStore = useThemeState();
+
+  const darkMode = themeStore.darkMode;
+
+  const themeSettings = themeStore.themeSettings;
+
+  const mixSiderFixed = themeStore.mixSiderFixed;
+
+  const [drawerVisible, setDrawerVisible] = useState(false);
+
+  const siderInverted = !darkMode && themeSettings.sider.inverted;
+  const hasMenus = childLevelMenus && childLevelMenus.length > 0;
+  const showDrawer = hasMenus && (drawerVisible || mixSiderFixed);
+
+  const title = import.meta.env.VITE_APP_TITLE;
+
+  function handleSelectMixMenu() {
+    setDrawerVisible(true);
+  }
+
+  function handleResetActiveMenu() {
+    setDrawerVisible(false);
+
+    routerActions.setActiveFirstLevelMenuKey();
+  }
+
+  return (
+    <div className="h-full flex" onMouseLeave={handleResetActiveMenu}>
+      <FirstLevelMenu inverted={siderInverted} onSelect={handleSelectMixMenu}>
+        <GlobalLogo
+          showTitle={false}
+          style={{ height: `${themeSettings.header.height}px` }}
+        />
+      </FirstLevelMenu>
+      <div
+        className="relative h-full transition-width-300"
+        style={{
+          width:
+            mixSiderFixed && hasMenus
+              ? `${themeSettings.sider.mixChildMenuWidth}px`
+              : "0px",
+        }}
+      >
+        <DarkModeContainer
+          className="absolute-lt h-full flex-col-stretch nowrap-hidden shadow-sm transition-all-300"
+          inverted={siderInverted}
+          style={{
+            width: showDrawer
+              ? `${themeSettings.sider.mixChildMenuWidth}px`
+              : "0px",
+          }}
+        >
+          <header
+            className="flex-y-center justify-between px-12px"
+            style={{ height: `${themeSettings.header.height}px` }}
+          >
+            <h2 className="text-16px text-primary font-bold">{title}</h2>
+            <PinToggler
+              className={classNames({
+                "text-white:88 !hover:text-white": siderInverted,
+              })}
+              pin={mixSiderFixed}
+              onClick={() => themeActions.toggleMixSiderFixed()}
+            />
+          </header>
+          <VerticalMenu />
+        </DarkModeContainer>
+      </div>
+    </div>
+  );
+});
+
+const VerticalMixMenu = () => {
+  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
+
+  if (!container) return null;
+
+  return createPortal(<VerticalMix />, container);
+};
+
+export default VerticalMixMenu;
