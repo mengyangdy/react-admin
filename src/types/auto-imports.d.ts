@@ -13,10 +13,17 @@ declare global {
   const ErrorBoundary: typeof import('../components/ErrorBoundary').default
   const Fragment: typeof import('react').Fragment
   const FullScreen: typeof import('../components/FullScreen').default
+  const IconAntDesignReloadOutlined: typeof import('~icons/ant-design/reload-outlined.tsx').default
+  const IconGridiconsFullscreen: typeof import('~icons/gridicons/fullscreen.tsx').default
+  const IconGridiconsFullscreenExit: typeof import('~icons/gridicons/fullscreen-exit.tsx').default
+  const IconLocalBanner: typeof import('~icons/local/banner.tsx').default
+  const IconLocalLogo: typeof import('~icons/local/logo.tsx').default
   const Loading: typeof import('../components/Loading').default
   const MenuToggler: typeof import('../components/MenuToggler').default
   const NumberTicker: typeof import('../components/NumberTicker').default
   const PinToggler: typeof import('../components/PinToggler').default
+  const ProTab: typeof import('../components/ProTable').ProTab
+  const ProTable: typeof import('../components/ProTable').ProTable
   const SkyrocAvatar: typeof import('../components/SkyrocAvatar').default
   const Suspense: typeof import('react').Suspense
   const SvgIcon: typeof import('../components/SvgIcon').default
@@ -159,4 +166,7 @@ declare global {
   // @ts-ignore
   export type { TabEvent } from '../hooks/tab/tabEnum'
   import('../hooks/tab/tabEnum')
+  // @ts-ignore
+  export type { ProColumn } from '../components/ProTable'
+  import('../components/ProTable')
 }

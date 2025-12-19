@@ -15,7 +15,7 @@ declare module "@tanstack/react-router" {
 		/**
 		 * 本地图标名称
 		 */
-		localIcon?: string
+		localIcon?: string;
 		/** 是否在菜单隐藏 (例如 login 页或详情页) */
 		hideInMenu?: boolean;
 		/** 排序权重 */
@@ -23,29 +23,29 @@ declare module "@tanstack/react-router" {
 		/** 激活的菜单路径（用于详情页等场景） */
 		activeMenu?: string;
 		/** 是否是常量路由 如果为true不需要登录校验和权限校验 */
-		constant?:boolean | null
+		constant?: boolean | null;
 		/** 固定在标签页中的顺序 */
-		fixedIndexInTab?:number | null
+		fixedIndexInTab?: number | null;
 		/**
 		 * 路由的外部链接地址
 		 */
-		href?:string | null
+		href?: string | null;
 		/**
 		 * 相同路径不同查询是否共用一个标签页
 		 */
-		multiTab?:boolean | null
+		multiTab?: boolean | null;
 		/**
 		 * 查询参数数组
 		 */
-		query?:{key:string;value:string[]}[] | null
+		query?: { key: string; value: string[] }[] | null;
 		/**
 		 * 可访问路由的角色数组
 		 */
-		roles?:string[]
+		roles?: string[];
 		/**
 		 * 内嵌外链地址
 		 */
-		url?:string | null
+		url?: string | null;
 	}
 }
 

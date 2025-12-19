@@ -40,7 +40,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
 	tabHeight = 44,
 	tabVisible = true,
 	updateSiderCollapse,
-}) => {	
+}) => {
 	const cssVar = createLayoutCssVars({
 		footerHeight,
 		headerHeight,

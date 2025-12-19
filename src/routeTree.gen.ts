@@ -11,11 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as LoginOutIndexRouteImport } from './routes/login-out/index'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutSystemRouteRouteImport } from './routes/_layout/system/route'
 import { Route as LayoutHomeIndexRouteImport } from './routes/_layout/home/index'
 import { Route as LayoutAboutIndexRouteImport } from './routes/_layout/about/index'
 import { Route as LayoutDemoTanstackQueryRouteImport } from './routes/_layout/demo/tanstack-query'
 import { Route as LayoutDemoStoreRouteImport } from './routes/_layout/demo/store'
+import { Route as LayoutSystemUserIndexRouteImport } from './routes/_layout/system/user/index'
+import { Route as LayoutSystemRoleIndexRouteImport } from './routes/_layout/system/role/index'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -26,9 +30,19 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginOutIndexRoute = LoginOutIndexRouteImport.update({
+  id: '/login-out/',
+  path: '/login-out/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutSystemRouteRoute = LayoutSystemRouteRouteImport.update({
+  id: '/system',
+  path: '/system',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutHomeIndexRoute = LayoutHomeIndexRouteImport.update({
@@ -51,63 +65,98 @@ const LayoutDemoStoreRoute = LayoutDemoStoreRouteImport.update({
   path: '/demo/store',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutSystemUserIndexRoute = LayoutSystemUserIndexRouteImport.update({
+  id: '/user/',
+  path: '/user/',
+  getParentRoute: () => LayoutSystemRouteRoute,
+} as any)
+const LayoutSystemRoleIndexRoute = LayoutSystemRoleIndexRouteImport.update({
+  id: '/role/',
+  path: '/role/',
+  getParentRoute: () => LayoutSystemRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/system': typeof LayoutSystemRouteRouteWithChildren
   '/': typeof LayoutIndexRoute
+  '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
   '/demo/store': typeof LayoutDemoStoreRoute
   '/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
+  '/system/role': typeof LayoutSystemRoleIndexRoute
+  '/system/user': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRoutesByTo {
+  '/system': typeof LayoutSystemRouteRouteWithChildren
   '/': typeof LayoutIndexRoute
+  '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
   '/demo/store': typeof LayoutDemoStoreRoute
   '/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
+  '/system/role': typeof LayoutSystemRoleIndexRoute
+  '/system/user': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout/system': typeof LayoutSystemRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
+  '/login-out/': typeof LoginOutIndexRoute
   '/login/': typeof LoginIndexRoute
   '/_layout/demo/store': typeof LayoutDemoStoreRoute
   '/_layout/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/_layout/about/': typeof LayoutAboutIndexRoute
   '/_layout/home/': typeof LayoutHomeIndexRoute
+  '/_layout/system/role/': typeof LayoutSystemRoleIndexRoute
+  '/_layout/system/user/': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/system'
     | '/'
+    | '/login-out'
     | '/login'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/about'
     | '/home'
+    | '/system/role'
+    | '/system/user'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/system'
     | '/'
+    | '/login-out'
     | '/login'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/about'
     | '/home'
+    | '/system/role'
+    | '/system/user'
   id:
     | '__root__'
     | '/_layout'
+    | '/_layout/system'
     | '/_layout/'
+    | '/login-out/'
     | '/login/'
     | '/_layout/demo/store'
     | '/_layout/demo/tanstack-query'
     | '/_layout/about/'
     | '/_layout/home/'
+    | '/_layout/system/role/'
+    | '/_layout/system/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
+  LoginOutIndexRoute: typeof LoginOutIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
 }
 
@@ -127,11 +176,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login-out/': {
+      id: '/login-out/'
+      path: '/login-out'
+      fullPath: '/login-out'
+      preLoaderRoute: typeof LoginOutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/system': {
+      id: '/_layout/system'
+      path: '/system'
+      fullPath: '/system'
+      preLoaderRoute: typeof LayoutSystemRouteRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/home/': {
@@ -162,10 +225,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutDemoStoreRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/system/user/': {
+      id: '/_layout/system/user/'
+      path: '/user'
+      fullPath: '/system/user'
+      preLoaderRoute: typeof LayoutSystemUserIndexRouteImport
+      parentRoute: typeof LayoutSystemRouteRoute
+    }
+    '/_layout/system/role/': {
+      id: '/_layout/system/role/'
+      path: '/role'
+      fullPath: '/system/role'
+      preLoaderRoute: typeof LayoutSystemRoleIndexRouteImport
+      parentRoute: typeof LayoutSystemRouteRoute
+    }
   }
 }
 
+interface LayoutSystemRouteRouteChildren {
+  LayoutSystemRoleIndexRoute: typeof LayoutSystemRoleIndexRoute
+  LayoutSystemUserIndexRoute: typeof LayoutSystemUserIndexRoute
+}
+
+const LayoutSystemRouteRouteChildren: LayoutSystemRouteRouteChildren = {
+  LayoutSystemRoleIndexRoute: LayoutSystemRoleIndexRoute,
+  LayoutSystemUserIndexRoute: LayoutSystemUserIndexRoute,
+}
+
+const LayoutSystemRouteRouteWithChildren =
+  LayoutSystemRouteRoute._addFileChildren(LayoutSystemRouteRouteChildren)
+
 interface LayoutRouteChildren {
+  LayoutSystemRouteRoute: typeof LayoutSystemRouteRouteWithChildren
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutDemoStoreRoute: typeof LayoutDemoStoreRoute
   LayoutDemoTanstackQueryRoute: typeof LayoutDemoTanstackQueryRoute
@@ -174,6 +265,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutSystemRouteRoute: LayoutSystemRouteRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutDemoStoreRoute: LayoutDemoStoreRoute,
   LayoutDemoTanstackQueryRoute: LayoutDemoTanstackQueryRoute,
@@ -186,6 +278,7 @@ const LayoutRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
+  LoginOutIndexRoute: LoginOutIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
 }
 export const routeTree = rootRouteImport

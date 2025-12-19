@@ -5,112 +5,112 @@ import type { ComponentPropsWithoutRef } from "react";
 import { useCallback, useEffect, useRef } from "react";
 
 interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
-  /** - 小数位数 */
-  decimalPlaces?: number;
-  /** - 延时时间 单位：秒 */
-  delay?: number;
-  /** - 动画方向 */
-  direction?: "down" | "up";
-  /** - 动画时长 单位：秒 如果不指定 则使用spring动画 更为自然地过渡 */
-  duration?: number;
-  /** - 前缀 */
-  prefix?: string;
-  /** - 起始值 */
-  startValue?: number;
-  /** - 后缀 */
-  suffix?: string;
-  /** - 目标值 */
-  value: number;
+	/** - 小数位数 */
+	decimalPlaces?: number;
+	/** - 延时时间 单位：秒 */
+	delay?: number;
+	/** - 动画方向 */
+	direction?: "down" | "up";
+	/** - 动画时长 单位：秒 如果不指定 则使用spring动画 更为自然地过渡 */
+	duration?: number;
+	/** - 前缀 */
+	prefix?: string;
+	/** - 起始值 */
+	startValue?: number;
+	/** - 后缀 */
+	suffix?: string;
+	/** - 目标值 */
+	value: number;
 }
 
 const NumberTicker = ({
-  className,
-  decimalPlaces = 0,
-  delay = 0,
-  direction = "up",
-  duration,
-  prefix = "",
-  startValue = 0,
-  suffix = "",
-  value,
-  ...props
+	className,
+	decimalPlaces = 0,
+	delay = 0,
+	direction = "up",
+	duration,
+	prefix = "",
+	startValue = 0,
+	suffix = "",
+	value,
+	...props
 }: NumberTickerProps) => {
-  const ref = useRef<HTMLSpanElement>(null);
+	const ref = useRef<HTMLSpanElement>(null);
 
-  const endValue = direction === "down" ? 0 : value;
+	const endValue = direction === "down" ? 0 : value;
 
-  const motionValue = useMotionValue(direction === "down" ? value : 0);
+	const motionValue = useMotionValue(direction === "down" ? value : 0);
 
-  const isInView = useInView(ref, { margin: "0px", once: true });
+	const isInView = useInView(ref, { margin: "0px", once: true });
 
-  const springValue = useSpring(motionValue, {
-    damping: 60,
-    stiffness: 100,
-  });
+	const springValue = useSpring(motionValue, {
+		damping: 60,
+		stiffness: 100,
+	});
 
-  const updateTextContent = useCallback(
-    (latest: number) => {
-      if (!ref.current) return;
+	const updateTextContent = useCallback(
+		(latest: number) => {
+			if (!ref.current) return;
 
-      const formattedNumber = Intl.NumberFormat("en-US", {
-        maximumFractionDigits: decimalPlaces,
-        minimumFractionDigits: decimalPlaces,
-      }).format(Number(latest.toFixed(decimalPlaces)));
-      ref.current.textContent = `${prefix} ${formattedNumber} ${suffix}`;
-    },
-    [decimalPlaces, prefix, suffix]
-  );
+			const formattedNumber = Intl.NumberFormat("en-US", {
+				maximumFractionDigits: decimalPlaces,
+				minimumFractionDigits: decimalPlaces,
+			}).format(Number(latest.toFixed(decimalPlaces)));
+			ref.current.textContent = `${prefix} ${formattedNumber} ${suffix}`;
+		},
+		[decimalPlaces, prefix, suffix],
+	);
 
-  useEffect(() => {
-    if (!isInView) return;
+	useEffect(() => {
+		if (!isInView) return;
 
-    const t = window.setTimeout(() => {
-      motionValue.set(endValue);
-    }, delay * 1000);
+		const t = window.setTimeout(() => {
+			motionValue.set(endValue);
+		}, delay * 1000);
 
-    return () => window.clearTimeout(t);
-  }, [motionValue, isInView, delay, endValue]);
+		return () => window.clearTimeout(t);
+	}, [motionValue, isInView, delay, endValue]);
 
-  useEffect(() => {
-    let animation: AnimationPlaybackControls | undefined;
-    let stopSpring: (() => void) | undefined;
-    if (duration) {
-      animation = animate(
-        motionValue.get(), // 起始值
-        endValue, // 目标值
-        {
-          duration, // 动画时长（秒）
-          onUpdate: (latest) => {
-            // 更新 motionValue（可选：如果后续还有依赖该值的逻辑）
-            motionValue.set(latest);
+	useEffect(() => {
+		let animation: AnimationPlaybackControls | undefined;
+		let stopSpring: (() => void) | undefined;
+		if (duration) {
+			animation = animate(
+				motionValue.get(), // 起始值
+				endValue, // 目标值
+				{
+					duration, // 动画时长（秒）
+					onUpdate: (latest) => {
+						// 更新 motionValue（可选：如果后续还有依赖该值的逻辑）
+						motionValue.set(latest);
 
-            updateTextContent(latest);
-          },
-        }
-      );
-    } else {
-      stopSpring = springValue.on("change", (latest) => {
-        updateTextContent(latest);
-      });
-    }
-    return () => {
-      stopSpring?.();
-      animation?.cancel();
-    };
-  }, [motionValue, springValue, endValue, duration, updateTextContent]);
+						updateTextContent(latest);
+					},
+				},
+			);
+		} else {
+			stopSpring = springValue.on("change", (latest) => {
+				updateTextContent(latest);
+			});
+		}
+		return () => {
+			stopSpring?.();
+			animation?.cancel();
+		};
+	}, [motionValue, springValue, endValue, duration, updateTextContent]);
 
-  return (
-    <span
-      className={clsx(
-        "inline-block tabular-nums tracking-wider text-white dark:text-dark",
-        className
-      )}
-      ref={ref}
-      {...props}
-    >
-      {prefix} {startValue} {suffix}
-    </span>
-  );
+	return (
+		<span
+			className={clsx(
+				"inline-block tabular-nums tracking-wider text-white dark:text-dark",
+				className,
+			)}
+			ref={ref}
+			{...props}
+		>
+			{prefix} {startValue} {suffix}
+		</span>
+	);
 };
 
 export default NumberTicker;

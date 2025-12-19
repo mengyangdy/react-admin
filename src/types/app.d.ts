@@ -233,4 +233,25 @@ declare namespace App {
 		/** 全局下拉枚举 */
 		type DropdownKey = "closeAll" | "closeCurrent" | "closeLeft" | "closeOther" | "closeRight";
 	}
+
+	namespace Service {
+		type OtherBaseURLKey = "demo";
+
+		interface ServiceConfigItem {
+			baseURL: string;
+			proxyPattern: string;
+		}
+
+		interface OtherServiceConfigItem extends ServiceConfigItem {
+			key: OtherBaseURLKey;
+		}
+
+		interface ServiceConfig extends ServiceConfigItem {
+			other: OtherServiceConfigItem[];
+		}
+
+		interface SimpleServiceConfig extends Pick<ServiceConfigItem, "baseURL"> {
+			other: Record<OtherBaseURLKey, string>;
+		}
+	}
 }

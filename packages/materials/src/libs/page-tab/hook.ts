@@ -5,7 +5,7 @@ type OnClick = () => void;
 export function useTap(onClick: OnClick) {
 	const [touchStart, setTouchStart] = useState(false);
 
-	const handleTouchStart = (e: React.TouchEvent) => {
+	const handleTouchStart = () => {
 		setTouchStart(true);
 	};
 	const handleTouchEnd = () => {

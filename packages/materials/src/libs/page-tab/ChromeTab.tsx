@@ -22,7 +22,7 @@ const ChromeTab = ({
 			{...rest}
 			{...tap}
 			onClick={onClick}
-			style={{...style}}
+			style={{ ...style }}
 			className={classNames(
 				":dy: relative inline-flex cursor-pointer items-center gap-16px whitespace-nowrap px-24px py-6px -mr-18px",
 				[

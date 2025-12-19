@@ -3,7 +3,7 @@ import type { ThemeModeType } from "ahooks/lib/useTheme";
 import type { ButtonProps, TooltipProps } from "antd";
 import type { CSSProperties } from "react";
 
-import { themeStore, themeActions } from "@/store/theme";
+import { themeActions, themeStore } from "@/store/theme";
 
 export const icons: Record<ThemeModeType, string> = {
 	dark: "material-symbols:nightlight-rounded",

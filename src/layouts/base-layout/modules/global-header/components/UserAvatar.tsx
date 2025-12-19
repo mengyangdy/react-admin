@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { Button, Dropdown, type MenuProps } from "antd";
 
@@ -7,6 +8,10 @@ const UserAvatar = () => {
 	const token = useStore(authStore, (s) => s.token);
 	const userInfo = useStore(authStore, (s) => s.userInfo);
 
+	// 2. 获取实例
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	// const { navigate, push } = useRouter();
 	// const {fullPath} = useRoute()
 	function logout() {
@@ -15,7 +20,13 @@ const UserAvatar = () => {
 			content: "确认退出登录吗?",
 			okText: "确认",
 			onOk: () => {
-				push("/login-out", { query: { redirect: fullPath } });
+				navigate({
+					to: "/login", // 通常退出后是去登录页，这里填你路由定义的路径
+					search: {
+						// location.href 包含了当前的完整路径（path + query params）
+						redirect: location.href,
+					},
+				});
 			},
 			title: "提示",
 		});

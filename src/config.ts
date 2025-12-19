@@ -1,8 +1,12 @@
 import { localStg } from "@/utils/storage.ts";
 
 import { themeSettings } from "./theme/settings.ts";
+import { getServiceBaseURL } from "./utils/service.ts";
 
 const isDev = import.meta.env.DEV;
+const isHttpProxy = isDev && import.meta.env.VITE_HTTP_PROXY === "Y";
+
+const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
 
 class GlobalConfig {
 	private _defaultDarkMode = false;
@@ -39,6 +43,18 @@ class GlobalConfig {
 	/** - 设置默认暗色模式 */
 	set defaultDarkMode(darkMode: boolean) {
 		this._defaultDarkMode = darkMode;
+	}
+	/** - 服务基础URL */
+	private _serviceBaseURL = baseURL;
+	/** - 服务基础URL */
+	get serviceBaseURL() {
+		return this._serviceBaseURL;
+	}
+	/** - 服务其他基础URL */
+	private _serviceOtherBaseURL = otherBaseURL;
+	/** - 服务其他基础URL */
+	get serviceOtherBaseURL() {
+		return this._serviceOtherBaseURL;
 	}
 }
 export const globalConfig = new GlobalConfig();

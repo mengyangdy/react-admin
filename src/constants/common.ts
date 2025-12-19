@@ -1,8 +1,8 @@
 import { transformRecordToOption } from "@/utils/common";
 
-export const yesOrNoRecord: Record<CommonType.YesOrNo, App.I18n.I18nKey> = {
-	N: "common.yesOrNo.no",
-	Y: "common.yesOrNo.yes",
+export const yesOrNoRecord: Record<CommonType.YesOrNo, string> = {
+	N: "否",
+	Y: "是",
 };
 
 export const yesOrNoOptions = transformRecordToOption(yesOrNoRecord);

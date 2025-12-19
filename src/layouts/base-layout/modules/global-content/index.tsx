@@ -8,49 +8,47 @@ import { routerActions, routerStore } from "@/store/router";
 import { useThemeSettings } from "@/store/theme";
 
 interface Props {
-  closePadding?: boolean;
+	closePadding?: boolean;
 }
 
 const GlobalContent = ({ closePadding }: Props) => {
-  const aliveRef = useKeepAliveRef();
+	const aliveRef = useKeepAliveRef();
 
-  const themeSettings = useThemeSettings();
-  const transitionName = themeSettings.page.animate
-    ? themeSettings.page.animateMode
-    : "";
-  const reloadFlag = useStore(appStore, (s) => s.reloadFlag);
-  const pathname = useRouterState({
-    select: (state) => state.location.pathname,
-  });
+	const themeSettings = useThemeSettings();
+	const transitionName = themeSettings.page.animate ? themeSettings.page.animateMode : "";
+	const reloadFlag = useStore(appStore, (s) => s.reloadFlag);
+	const pathname = useRouterState({
+		select: (state) => state.location.pathname,
+	});
 
-  const removeCacheKey = useStore(routerStore, (s) => s.removeCacheKey);
-  const cacheRoutes = useStore(routerStore, (s) => s.cacheRoutes);
+	const removeCacheKey = useStore(routerStore, (s) => s.removeCacheKey);
+	const cacheRoutes = useStore(routerStore, (s) => s.cacheRoutes);
 
-  useUpdateEffect(() => {
-    if (!aliveRef.current || !removeCacheKey) return;
-    aliveRef.current.destroy(removeCacheKey);
-    routerActions.setRemoveCacheKey(null);
-  }, [removeCacheKey]);
+	useUpdateEffect(() => {
+		if (!aliveRef.current || !removeCacheKey) return;
+		aliveRef.current.destroy(removeCacheKey);
+		routerActions.setRemoveCacheKey(null);
+	}, [removeCacheKey]);
 
-  useUpdateEffect(() => {
-    aliveRef.current?.refresh();
-  }, [reloadFlag, transitionName]);
-  return (
-    <div
-      className={clsx("h-full flex-grow bg-layout", {
-        "p-16px": !closePadding,
-      })}
-    >
-      <KeepAlive
-        activeCacheKey={pathname}
-        aliveRef={aliveRef}
-        cacheNodeClassName={reloadFlag ? "" : transitionName}
-        include={cacheRoutes}
-      >
-        {!reloadFlag && <Outlet />}
-      </KeepAlive>
-    </div>
-  );
+	useUpdateEffect(() => {
+		aliveRef.current?.refresh();
+	}, [reloadFlag, transitionName]);
+	return (
+		<div
+			className={clsx("h-full flex-grow bg-layout", {
+				"p-16px": !closePadding,
+			})}
+		>
+			<KeepAlive
+				activeCacheKey={pathname}
+				aliveRef={aliveRef}
+				cacheNodeClassName={reloadFlag ? "" : transitionName}
+				include={cacheRoutes}
+			>
+				{!reloadFlag && <Outlet />}
+			</KeepAlive>
+		</div>
+	);
 };
 
 export default GlobalContent;

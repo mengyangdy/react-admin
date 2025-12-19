@@ -5,9 +5,9 @@ import AntdVerticalMenu from "@/layouts/base-layout/modules/global-menu/componen
 import { useGetElementById } from "@/layouts/base-layout/modules/global-menu/modules/hook.ts";
 
 const VerticalMenu = () => {
-  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
-  if (!container) return null;
-  return createPortal(<AntdVerticalMenu />, container);
+	const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
+	if (!container) return null;
+	return createPortal(<AntdVerticalMenu />, container);
 };
 
 export default VerticalMenu;

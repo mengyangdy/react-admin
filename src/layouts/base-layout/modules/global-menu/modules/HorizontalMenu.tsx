@@ -7,13 +7,13 @@ import { HorizontalMenuMode } from "../types";
 import { useGetElementById } from "./hook";
 
 interface Props {
-  readonly mode?: HorizontalMenuMode;
+	readonly mode?: HorizontalMenuMode;
 }
 
 const HorizontalMenu = ({ mode = HorizontalMenuMode.All }: Props) => {
-  const container = useGetElementById(GLOBAL_HEADER_MENU_ID);
-  if (!container) return null;
-  return createPortal(<AntdHorizontalMenu mode={mode} />, container);
+	const container = useGetElementById(GLOBAL_HEADER_MENU_ID);
+	if (!container) return null;
+	return createPortal(<AntdHorizontalMenu mode={mode} />, container);
 };
 
 export default HorizontalMenu;
