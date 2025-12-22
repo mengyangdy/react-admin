@@ -7,28 +7,38 @@
 export {}
 declare global {
   const Activity: typeof import('react').Activity
+  const BaseTable: typeof import('../components/table/BaseTable').BaseTable
   const BetterScroll: typeof import('../components/BetterScroll').default
   const ButtonIcon: typeof import('../components/ButtonIcon').default
   const DarkModeContainer: typeof import('../components/DarkModeContainer').default
+  const DragContent: typeof import('../components/DragContent').default
   const ErrorBoundary: typeof import('../components/ErrorBoundary').default
   const Fragment: typeof import('react').Fragment
   const FullScreen: typeof import('../components/FullScreen').default
   const IconAntDesignReloadOutlined: typeof import('~icons/ant-design/reload-outlined.tsx').default
+  const IconAntDesignSettingOutlined: typeof import('~icons/ant-design/setting-outlined.tsx').default
   const IconGridiconsFullscreen: typeof import('~icons/gridicons/fullscreen.tsx').default
   const IconGridiconsFullscreenExit: typeof import('~icons/gridicons/fullscreen-exit.tsx').default
+  const IconIcRoundDelete: typeof import('~icons/ic/round-delete.tsx').default
+  const IconIcRoundPlus: typeof import('~icons/ic/round-plus.tsx').default
+  const IconIcRoundRefresh: typeof import('~icons/ic/round-refresh.tsx').default
+  const IconIcRoundSearch: typeof import('~icons/ic/round-search.tsx').default
   const IconLocalBanner: typeof import('~icons/local/banner.tsx').default
   const IconLocalLogo: typeof import('~icons/local/logo.tsx').default
+  const IconMdiDrag: typeof import('~icons/mdi/drag.tsx').default
+  const IconMdiRefresh: typeof import('~icons/mdi/refresh.tsx').default
   const Loading: typeof import('../components/Loading').default
   const MenuToggler: typeof import('../components/MenuToggler').default
   const NumberTicker: typeof import('../components/NumberTicker').default
   const PinToggler: typeof import('../components/PinToggler').default
-  const ProTab: typeof import('../components/ProTable').ProTab
-  const ProTable: typeof import('../components/ProTable').ProTable
+  const ProTab: typeof import('../components/table/ProTable').ProTab
+  const ProTable: typeof import('../components/table/ProTable').ProTable
   const SkyrocAvatar: typeof import('../components/SkyrocAvatar').default
   const Suspense: typeof import('react').Suspense
   const SvgIcon: typeof import('../components/SvgIcon').default
   const SystemLogo: typeof import('../components/SystemLogo').default
   const TabEvent: typeof import('../hooks/tab/tabEnum').TabEvent
+  const TableHeaderOperation: typeof import('../components/TableHeaderOperation').default
   const TypingAnimation: typeof import('../components/TypingAnimation').default
   const cache: typeof import('react').cache
   const cacheSignal: typeof import('react').cacheSignal
@@ -50,7 +60,7 @@ declare global {
   const useAntdTable: typeof import('ahooks').useAntdTable
   const useArray: typeof import('../hooks/common/use-array').default
   const useAsyncEffect: typeof import('ahooks').useAsyncEffect
-  const useBoolean: typeof import('ahooks').useBoolean
+  const useBoolean: typeof import('../hooks/common/use-boolean').default
   const useCacheTabs: typeof import('../hooks/tab/useTab').useCacheTabs
   const useCallback: typeof import('react').useCallback
   const useClickAway: typeof import('ahooks').useClickAway
@@ -87,6 +97,7 @@ declare global {
   const useFusionTable: typeof import('ahooks').useFusionTable
   const useGetState: typeof import('ahooks').useGetState
   const useHistoryTravel: typeof import('ahooks').useHistoryTravel
+  const useHookTable: typeof import('../hooks/common/use-table').useHookTable
   const useHover: typeof import('ahooks').useHover
   const useId: typeof import('react').useId
   const useImperativeHandle: typeof import('react').useImperativeHandle
@@ -98,6 +109,7 @@ declare global {
   const useKeyPress: typeof import('ahooks').useKeyPress
   const useLatest: typeof import('ahooks').useLatest
   const useLayoutEffect: typeof import('react').useLayoutEffect
+  const useLoading: typeof import('../hooks/common/use-loading').default
   const useLocalStorageState: typeof import('ahooks').useLocalStorageState
   const useLockFn: typeof import('ahooks').useLockFn
   const useLongPress: typeof import('ahooks').useLongPress
@@ -135,6 +147,9 @@ declare global {
   const useTabController: typeof import('../hooks/tab/useTab').useTabController
   const useTabManage: typeof import('../hooks/tab/useTab').useTabManage
   const useTabScroll: typeof import('../hooks/tab/useTabScroll').useTabScroll
+  const useTable: typeof import('../hooks/table/use-table').useTable
+  const useTableOperate: typeof import('../hooks/table/use-table').useTableOperate
+  const useTableScroll: typeof import('../hooks/table/use-table').useTableScroll
   const useTanstackRouter: typeof import('../hooks/router/useTanstackRouter').useTanstackRouter
   const useTextSelection: typeof import('ahooks').useTextSelection
   const useTheme: typeof import('ahooks').useTheme
@@ -164,9 +179,9 @@ declare global {
   export type { ECOption } from '../hooks/common/echarts'
   import('../hooks/common/echarts')
   // @ts-ignore
+  export type { MaybePromise, ApiFn, TableColumnCheck, TableDataWithIndex, TransformedData, Transformer, TableConfig } from '../hooks/common/use-table'
+  import('../hooks/common/use-table')
+  // @ts-ignore
   export type { TabEvent } from '../hooks/tab/tabEnum'
   import('../hooks/tab/tabEnum')
-  // @ts-ignore
-  export type { ProColumn } from '../components/ProTable'
-  import('../components/ProTable')
 }

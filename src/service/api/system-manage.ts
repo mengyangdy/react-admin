@@ -1,6 +1,5 @@
 import request from "../request";
 
-export const getUserList;
-(data:){
-  return request.get('/user/list',data)
+export function fetchGetUserList(data) {
+  return request.get("/user/list", data);
 }
