@@ -6,7 +6,7 @@ import "./plugins/assets";
 import { ErrorBoundary } from "react-error-boundary";
 
 import FallbackRender from "./components/ErrorBoundary.tsx";
-import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
+import * as TanStackQueryProvider from "./features/tanstack-query/root-provider.tsx";
 import { setupAppVersionNotification, setupIconifyOffline, setupNProgress } from "./plugins";
 import { routeTree } from "./routeTree.gen";
 

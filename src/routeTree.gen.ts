@@ -16,8 +16,6 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSystemRouteRouteImport } from './routes/_layout/system/route'
 import { Route as LayoutHomeIndexRouteImport } from './routes/_layout/home/index'
 import { Route as LayoutAboutIndexRouteImport } from './routes/_layout/about/index'
-import { Route as LayoutDemoTanstackQueryRouteImport } from './routes/_layout/demo/tanstack-query'
-import { Route as LayoutDemoStoreRouteImport } from './routes/_layout/demo/store'
 import { Route as LayoutSystemUserIndexRouteImport } from './routes/_layout/system/user/index'
 import { Route as LayoutSystemRoleIndexRouteImport } from './routes/_layout/system/role/index'
 
@@ -55,16 +53,6 @@ const LayoutAboutIndexRoute = LayoutAboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutDemoTanstackQueryRoute = LayoutDemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutDemoStoreRoute = LayoutDemoStoreRouteImport.update({
-  id: '/demo/store',
-  path: '/demo/store',
-  getParentRoute: () => LayoutRoute,
-} as any)
 const LayoutSystemUserIndexRoute = LayoutSystemUserIndexRouteImport.update({
   id: '/user/',
   path: '/user/',
@@ -81,8 +69,6 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
-  '/demo/store': typeof LayoutDemoStoreRoute
-  '/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
   '/system/role': typeof LayoutSystemRoleIndexRoute
@@ -93,8 +79,6 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
-  '/demo/store': typeof LayoutDemoStoreRoute
-  '/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
   '/system/role': typeof LayoutSystemRoleIndexRoute
@@ -107,8 +91,6 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/login-out/': typeof LoginOutIndexRoute
   '/login/': typeof LoginIndexRoute
-  '/_layout/demo/store': typeof LayoutDemoStoreRoute
-  '/_layout/demo/tanstack-query': typeof LayoutDemoTanstackQueryRoute
   '/_layout/about/': typeof LayoutAboutIndexRoute
   '/_layout/home/': typeof LayoutHomeIndexRoute
   '/_layout/system/role/': typeof LayoutSystemRoleIndexRoute
@@ -121,8 +103,6 @@ export interface FileRouteTypes {
     | '/'
     | '/login-out'
     | '/login'
-    | '/demo/store'
-    | '/demo/tanstack-query'
     | '/about'
     | '/home'
     | '/system/role'
@@ -133,8 +113,6 @@ export interface FileRouteTypes {
     | '/'
     | '/login-out'
     | '/login'
-    | '/demo/store'
-    | '/demo/tanstack-query'
     | '/about'
     | '/home'
     | '/system/role'
@@ -146,8 +124,6 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/login-out/'
     | '/login/'
-    | '/_layout/demo/store'
-    | '/_layout/demo/tanstack-query'
     | '/_layout/about/'
     | '/_layout/home/'
     | '/_layout/system/role/'
@@ -211,20 +187,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAboutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/demo/tanstack-query': {
-      id: '/_layout/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof LayoutDemoTanstackQueryRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/demo/store': {
-      id: '/_layout/demo/store'
-      path: '/demo/store'
-      fullPath: '/demo/store'
-      preLoaderRoute: typeof LayoutDemoStoreRouteImport
-      parentRoute: typeof LayoutRoute
-    }
     '/_layout/system/user/': {
       id: '/_layout/system/user/'
       path: '/user'
@@ -258,8 +220,6 @@ const LayoutSystemRouteRouteWithChildren =
 interface LayoutRouteChildren {
   LayoutSystemRouteRoute: typeof LayoutSystemRouteRouteWithChildren
   LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutDemoStoreRoute: typeof LayoutDemoStoreRoute
-  LayoutDemoTanstackQueryRoute: typeof LayoutDemoTanstackQueryRoute
   LayoutAboutIndexRoute: typeof LayoutAboutIndexRoute
   LayoutHomeIndexRoute: typeof LayoutHomeIndexRoute
 }
@@ -267,8 +227,6 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutSystemRouteRoute: LayoutSystemRouteRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutDemoStoreRoute: LayoutDemoStoreRoute,
-  LayoutDemoTanstackQueryRoute: LayoutDemoTanstackQueryRoute,
   LayoutAboutIndexRoute: LayoutAboutIndexRoute,
   LayoutHomeIndexRoute: LayoutHomeIndexRoute,
 }

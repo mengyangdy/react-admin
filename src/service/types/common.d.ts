@@ -24,14 +24,6 @@ declare namespace Api {
 		/** 通用搜索参数 */
 		type CommonSearchParams = Pick<Common.PaginatingCommonParams, "current" | "size">;
 
-		/**
-		 * 启用状态
-		 *
-		 * - "1": 启用
-		 * - "2": 禁用
-		 */
-		type EnableStatus = import("../enums").EnableStatusValue;
-
 		/** 通用记录类型 */
 		type CommonRecord<T = any> = {
 			/** 创建人 */

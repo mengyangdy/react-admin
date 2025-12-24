@@ -24,10 +24,9 @@ export default defineConfig((configEnv) => {
 		// CSS 预处理器配置
 		css: {
 			preprocessorOptions: {
-				scss: {
-					api: "modern-compiler", // Vite 7 / Sass 推荐使用现代编译器
-					// additionalData: `@use "@/styles/variables.scss" as *;`, // 如果有全局变量文件
-				},
+				// 如果需要 Sass 新 API（modern-compiler），请升级到支持该字段的
+				// Vite/Sass 版本后再开启；当前类型定义不包含 api 字段。
+				scss: {},
 			},
 		},
 		server: {
@@ -83,37 +82,23 @@ export default defineConfig((configEnv) => {
 					},
 					// 智能分包策略
 					manualChunks(id) {
-						// 1. 先处理 node_modules 里的内容
 						if (id.includes("node_modules")) {
-							// 🔥 第一优先：ECharts (体积最大，必须先拆出来)
-							// 包含 echarts 核心和 zrender 渲染引擎
 							if (id.includes("echarts") || id.includes("zrender")) {
 								return "echarts";
 							}
-
-							// 🔥 第二优先：Ant Design (体积次大)
-							// 包含 antd 组件库和它依赖的图标库、rc-组件
 							if (id.includes("antd") || id.includes("@ant-design") || id.includes("rc-")) {
 								return "antd";
 							}
 
-							// 🚀 第三优先：Framer Motion (动画库)
 							if (id.includes("motion") || id.includes("framer-motion")) {
 								return "motion";
 							}
-
-							// ⚛️ 第四优先：React 核心 + TanStack 全家桶
-							// 这些是应用骨架，虽然也不小，但必须首屏加载，所以放一起
 							if (id.includes("react") || id.includes("react-dom") || id.includes("@tanstack")) {
 								return "react-core";
 							}
-
-							// 🛠 第五优先：通用工具库
 							if (id.includes("axios") || id.includes("ahooks") || id.includes("immer")) {
 								return "utils";
 							}
-
-							// 📦 兜底：其他所有 node_modules 里的零碎包
 							return "vendor";
 						}
 					},

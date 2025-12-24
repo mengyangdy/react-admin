@@ -7,7 +7,7 @@ import { setupHtmlPlugin } from "./html";
 import { setupAutoImport } from "./auto-import";
 import { setupUnPluginIcon } from "./unplugin-icon";
 import { visualizer } from "rollup-plugin-visualizer";
-import { compression } from "vite-plugin-compression2";
+// import { compression } from "vite-plugin-compression2";
 
 export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
   const plugins: PluginOption = [

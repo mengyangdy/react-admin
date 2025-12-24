@@ -1,37 +1,16 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-
-import { fetchGetUserInfo, fetchLogin } from "@/service/api/auth";
 import { localStg } from "@/utils/storage.ts";
-
-import { QUERY_KEYS } from "./key";
 
 export function getToken() {
   return localStg.get("token") || "";
 }
 
-export function useLogin() {
-  return useMutation({
-    mutationFn: (params) => fetchLogin(params),
-    retry: false,
-  });
-}
-
-export function useUserInfo() {
-  const hasToken = Boolean(localStg.get("token"));
-  return useQuery({
-    enabled: hasToken,
-    gcTime: Infinity,
-    placeholderData: () => ({
-      name: "",
-      avatar: "",
-      buttons: [],
-      roles: [],
-    }),
-    queryFn: fetchGetUserInfo,
-    queryKey: QUERY_KEYS.AUTH.USER_INFO,
-    retry: false,
-    staleTime: Infinity,
-  });
+export interface UserInfoResponse {
+  userId: string;
+  userName: string;
+  name: string;
+  avatar: string;
+  buttons: string[];
+  roles: string[];
 }
 
 export function clearAuthStorage() {

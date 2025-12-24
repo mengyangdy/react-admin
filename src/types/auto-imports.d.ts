@@ -60,7 +60,7 @@ declare global {
   const useAntdTable: typeof import('ahooks').useAntdTable
   const useArray: typeof import('../hooks/common/use-array').default
   const useAsyncEffect: typeof import('ahooks').useAsyncEffect
-  const useBoolean: typeof import('../hooks/common/use-boolean').default
+  const useBoolean: typeof import('ahooks').useBoolean
   const useCacheTabs: typeof import('../hooks/tab/useTab').useCacheTabs
   const useCallback: typeof import('react').useCallback
   const useClickAway: typeof import('ahooks').useClickAway
@@ -112,6 +112,7 @@ declare global {
   const useLoading: typeof import('../hooks/common/use-loading').default
   const useLocalStorageState: typeof import('ahooks').useLocalStorageState
   const useLockFn: typeof import('ahooks').useLockFn
+  const useLoginRedirect: typeof import('../hooks/router/useLoginRedirect').useLoginRedirect
   const useLongPress: typeof import('ahooks').useLongPress
   const useMap: typeof import('ahooks').useMap
   const useMemo: typeof import('react').useMemo

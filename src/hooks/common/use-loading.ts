@@ -1,16 +1,12 @@
-import useBoolean from "./use-boolean";
-
+import { useBoolean } from "ahooks";
 /**
  * Loading
  *
  * @param initValue Init value
  */
 export default function useLoading(initValue = false) {
-  const {
-    bool: loading,
-    setFalse: endLoading,
-    setTrue: startLoading,
-  } = useBoolean(initValue);
+  const [loading, { setFalse: endLoading, setTrue: startLoading }] =
+    useBoolean(initValue);
 
   return {
     endLoading,

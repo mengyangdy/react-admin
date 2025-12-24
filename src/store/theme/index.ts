@@ -66,7 +66,7 @@ export const getThemeSettings = selectThemeSettings;
  */
 export const useThemeSettings = () => useStore(themeStore, selectThemeSettings);
 
-const selectIsMobile=(state:ThemeState)=>state.isMobile
+const selectIsMobile = (state: ThemeState) => state.isMobile;
 export const useGetIsMobile = () => useStore(themeStore, selectIsMobile);
 
 // 主题颜色选择器：从 themeSettings 中提取并处理颜色

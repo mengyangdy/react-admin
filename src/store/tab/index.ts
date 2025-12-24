@@ -81,6 +81,6 @@ export const tabActions = {
 		);
 	},
 	resetTabStore() {
-		tabStore.setState(()=> getInitialState())
+		tabStore.setState(() => getInitialState());
 	},
 };
