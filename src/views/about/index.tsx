@@ -94,3 +94,5 @@ export const Route = createFileRoute("/_layout/about/")({
     order: 100,
   },
 });
+
+export default About;

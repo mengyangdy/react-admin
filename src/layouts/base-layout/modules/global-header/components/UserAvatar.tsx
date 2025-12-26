@@ -1,17 +1,17 @@
-import { useLocation, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { Button, Dropdown, type MenuProps } from "antd";
 
+import { useUserInfo } from "@/service/hooks";
 import { authStore } from "@/store/auth";
 
 const UserAvatar = () => {
+  const navigate = useNavigate();
   const token = useStore(authStore, (s) => s.token);
-  const userInfo = useStore(authStore, (s) => s.userInfo);
+  const { data: userInfo } = useUserInfo();
 
   // 2. 获取实例
   const toLogin = useLoginRedirect();
-  // const { navigate, push } = useRouter();
-  // const {fullPath} = useRoute()
   function logout() {
     window?.$modal?.confirm({
       cancelText: "取消",
@@ -27,7 +27,9 @@ const UserAvatar = () => {
     if (key === "1") {
       logout();
     } else {
-      navigate("/user-center");
+      navigate({
+        to: "/account/center",
+      });
     }
   }
 
@@ -68,7 +70,9 @@ const UserAvatar = () => {
       <div>
         <ButtonIcon className="px-12px">
           <SvgIcon className="text-icon-large" icon="ph:user-circle" />
-          <span className="text-16px font-medium">{userInfo?.userName}</span>
+          <span className="text-16px font-medium">
+            {userInfo?.data?.username}
+          </span>
         </ButtonIcon>
       </div>
     </Dropdown>

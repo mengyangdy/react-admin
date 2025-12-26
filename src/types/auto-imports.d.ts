@@ -13,6 +13,7 @@ declare global {
   const DarkModeContainer: typeof import('../components/DarkModeContainer').default
   const DragContent: typeof import('../components/DragContent').default
   const ErrorBoundary: typeof import('../components/ErrorBoundary').default
+  const ExceptionBase: typeof import('../components/ExceptionBase').default
   const Fragment: typeof import('react').Fragment
   const FullScreen: typeof import('../components/FullScreen').default
   const IconAntDesignReloadOutlined: typeof import('~icons/ant-design/reload-outlined.tsx').default
@@ -162,6 +163,7 @@ declare global {
   const useToggle: typeof import('ahooks').useToggle
   const useTrackedEffect: typeof import('ahooks').useTrackedEffect
   const useTransition: typeof import('react').useTransition
+  const useURLStateSync: typeof import('../hooks/common/urlToState').useURLStateSync
   const useUnmount: typeof import('ahooks').useUnmount
   const useUnmountedRef: typeof import('ahooks').useUnmountedRef
   const useUpdate: typeof import('ahooks').useUpdate
@@ -179,9 +181,6 @@ declare global {
   // @ts-ignore
   export type { ECOption } from '../hooks/common/echarts'
   import('../hooks/common/echarts')
-  // @ts-ignore
-  export type { MaybePromise, ApiFn, TableColumnCheck, TableDataWithIndex, TransformedData, Transformer, TableConfig } from '../hooks/common/use-table'
-  import('../hooks/common/use-table')
   // @ts-ignore
   export type { TabEvent } from '../hooks/tab/tabEnum'
   import('../hooks/tab/tabEnum')

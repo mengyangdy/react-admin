@@ -2,8 +2,8 @@ import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 
 // 定义默认配置常量
 const DEFAULT_QUERY_CONFIG = {
-	// 缓存配置 - 10分钟后清理未使用的查询缓存
-	gcTime: 10 * 60 * 1000,
+	// 缓存配置 - 5分钟后清理未使用的查询缓存（优化内存占用）
+	gcTime: 5 * 60 * 1000,
 	// 网络模式配置
 	networkMode: "online" as const,
 	// 组件挂载时如果数据过期则重新获取

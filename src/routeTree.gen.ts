@@ -14,10 +14,16 @@ import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as LoginOutIndexRouteImport } from './routes/login-out/index'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSystemRouteRouteImport } from './routes/_layout/system/route'
+import { Route as LayoutErrorRouteRouteImport } from './routes/_layout/error/route'
+import { Route as LayoutAccountRouteRouteImport } from './routes/_layout/account/route'
 import { Route as LayoutHomeIndexRouteImport } from './routes/_layout/home/index'
 import { Route as LayoutAboutIndexRouteImport } from './routes/_layout/about/index'
 import { Route as LayoutSystemUserIndexRouteImport } from './routes/_layout/system/user/index'
 import { Route as LayoutSystemRoleIndexRouteImport } from './routes/_layout/system/role/index'
+import { Route as LayoutError500IndexRouteImport } from './routes/_layout/error/500/index'
+import { Route as LayoutError404IndexRouteImport } from './routes/_layout/error/404/index'
+import { Route as LayoutError403IndexRouteImport } from './routes/_layout/error/403/index'
+import { Route as LayoutAccountCenterIndexRouteImport } from './routes/_layout/account/center/index'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -43,6 +49,16 @@ const LayoutSystemRouteRoute = LayoutSystemRouteRouteImport.update({
   path: '/system',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutErrorRouteRoute = LayoutErrorRouteRouteImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutAccountRouteRoute = LayoutAccountRouteRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutHomeIndexRoute = LayoutHomeIndexRouteImport.update({
   id: '/home/',
   path: '/home/',
@@ -63,69 +79,126 @@ const LayoutSystemRoleIndexRoute = LayoutSystemRoleIndexRouteImport.update({
   path: '/role/',
   getParentRoute: () => LayoutSystemRouteRoute,
 } as any)
+const LayoutError500IndexRoute = LayoutError500IndexRouteImport.update({
+  id: '/500/',
+  path: '/500/',
+  getParentRoute: () => LayoutErrorRouteRoute,
+} as any)
+const LayoutError404IndexRoute = LayoutError404IndexRouteImport.update({
+  id: '/404/',
+  path: '/404/',
+  getParentRoute: () => LayoutErrorRouteRoute,
+} as any)
+const LayoutError403IndexRoute = LayoutError403IndexRouteImport.update({
+  id: '/403/',
+  path: '/403/',
+  getParentRoute: () => LayoutErrorRouteRoute,
+} as any)
+const LayoutAccountCenterIndexRoute =
+  LayoutAccountCenterIndexRouteImport.update({
+    id: '/center/',
+    path: '/center/',
+    getParentRoute: () => LayoutAccountRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
+  '/account': typeof LayoutAccountRouteRouteWithChildren
+  '/error': typeof LayoutErrorRouteRouteWithChildren
   '/system': typeof LayoutSystemRouteRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
+  '/account/center': typeof LayoutAccountCenterIndexRoute
+  '/error/403': typeof LayoutError403IndexRoute
+  '/error/404': typeof LayoutError404IndexRoute
+  '/error/500': typeof LayoutError500IndexRoute
   '/system/role': typeof LayoutSystemRoleIndexRoute
   '/system/user': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRoutesByTo {
+  '/account': typeof LayoutAccountRouteRouteWithChildren
+  '/error': typeof LayoutErrorRouteRouteWithChildren
   '/system': typeof LayoutSystemRouteRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/login-out': typeof LoginOutIndexRoute
   '/login': typeof LoginIndexRoute
   '/about': typeof LayoutAboutIndexRoute
   '/home': typeof LayoutHomeIndexRoute
+  '/account/center': typeof LayoutAccountCenterIndexRoute
+  '/error/403': typeof LayoutError403IndexRoute
+  '/error/404': typeof LayoutError404IndexRoute
+  '/error/500': typeof LayoutError500IndexRoute
   '/system/role': typeof LayoutSystemRoleIndexRoute
   '/system/user': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout/account': typeof LayoutAccountRouteRouteWithChildren
+  '/_layout/error': typeof LayoutErrorRouteRouteWithChildren
   '/_layout/system': typeof LayoutSystemRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
   '/login-out/': typeof LoginOutIndexRoute
   '/login/': typeof LoginIndexRoute
   '/_layout/about/': typeof LayoutAboutIndexRoute
   '/_layout/home/': typeof LayoutHomeIndexRoute
+  '/_layout/account/center/': typeof LayoutAccountCenterIndexRoute
+  '/_layout/error/403/': typeof LayoutError403IndexRoute
+  '/_layout/error/404/': typeof LayoutError404IndexRoute
+  '/_layout/error/500/': typeof LayoutError500IndexRoute
   '/_layout/system/role/': typeof LayoutSystemRoleIndexRoute
   '/_layout/system/user/': typeof LayoutSystemUserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/account'
+    | '/error'
     | '/system'
     | '/'
     | '/login-out'
     | '/login'
     | '/about'
     | '/home'
+    | '/account/center'
+    | '/error/403'
+    | '/error/404'
+    | '/error/500'
     | '/system/role'
     | '/system/user'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/account'
+    | '/error'
     | '/system'
     | '/'
     | '/login-out'
     | '/login'
     | '/about'
     | '/home'
+    | '/account/center'
+    | '/error/403'
+    | '/error/404'
+    | '/error/500'
     | '/system/role'
     | '/system/user'
   id:
     | '__root__'
     | '/_layout'
+    | '/_layout/account'
+    | '/_layout/error'
     | '/_layout/system'
     | '/_layout/'
     | '/login-out/'
     | '/login/'
     | '/_layout/about/'
     | '/_layout/home/'
+    | '/_layout/account/center/'
+    | '/_layout/error/403/'
+    | '/_layout/error/404/'
+    | '/_layout/error/500/'
     | '/_layout/system/role/'
     | '/_layout/system/user/'
   fileRoutesById: FileRoutesById
@@ -173,6 +246,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSystemRouteRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/error': {
+      id: '/_layout/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof LayoutErrorRouteRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/account': {
+      id: '/_layout/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof LayoutAccountRouteRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/home/': {
       id: '/_layout/home/'
       path: '/home'
@@ -201,8 +288,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSystemRoleIndexRouteImport
       parentRoute: typeof LayoutSystemRouteRoute
     }
+    '/_layout/error/500/': {
+      id: '/_layout/error/500/'
+      path: '/500'
+      fullPath: '/error/500'
+      preLoaderRoute: typeof LayoutError500IndexRouteImport
+      parentRoute: typeof LayoutErrorRouteRoute
+    }
+    '/_layout/error/404/': {
+      id: '/_layout/error/404/'
+      path: '/404'
+      fullPath: '/error/404'
+      preLoaderRoute: typeof LayoutError404IndexRouteImport
+      parentRoute: typeof LayoutErrorRouteRoute
+    }
+    '/_layout/error/403/': {
+      id: '/_layout/error/403/'
+      path: '/403'
+      fullPath: '/error/403'
+      preLoaderRoute: typeof LayoutError403IndexRouteImport
+      parentRoute: typeof LayoutErrorRouteRoute
+    }
+    '/_layout/account/center/': {
+      id: '/_layout/account/center/'
+      path: '/center'
+      fullPath: '/account/center'
+      preLoaderRoute: typeof LayoutAccountCenterIndexRouteImport
+      parentRoute: typeof LayoutAccountRouteRoute
+    }
   }
 }
+
+interface LayoutAccountRouteRouteChildren {
+  LayoutAccountCenterIndexRoute: typeof LayoutAccountCenterIndexRoute
+}
+
+const LayoutAccountRouteRouteChildren: LayoutAccountRouteRouteChildren = {
+  LayoutAccountCenterIndexRoute: LayoutAccountCenterIndexRoute,
+}
+
+const LayoutAccountRouteRouteWithChildren =
+  LayoutAccountRouteRoute._addFileChildren(LayoutAccountRouteRouteChildren)
+
+interface LayoutErrorRouteRouteChildren {
+  LayoutError403IndexRoute: typeof LayoutError403IndexRoute
+  LayoutError404IndexRoute: typeof LayoutError404IndexRoute
+  LayoutError500IndexRoute: typeof LayoutError500IndexRoute
+}
+
+const LayoutErrorRouteRouteChildren: LayoutErrorRouteRouteChildren = {
+  LayoutError403IndexRoute: LayoutError403IndexRoute,
+  LayoutError404IndexRoute: LayoutError404IndexRoute,
+  LayoutError500IndexRoute: LayoutError500IndexRoute,
+}
+
+const LayoutErrorRouteRouteWithChildren =
+  LayoutErrorRouteRoute._addFileChildren(LayoutErrorRouteRouteChildren)
 
 interface LayoutSystemRouteRouteChildren {
   LayoutSystemRoleIndexRoute: typeof LayoutSystemRoleIndexRoute
@@ -218,6 +359,8 @@ const LayoutSystemRouteRouteWithChildren =
   LayoutSystemRouteRoute._addFileChildren(LayoutSystemRouteRouteChildren)
 
 interface LayoutRouteChildren {
+  LayoutAccountRouteRoute: typeof LayoutAccountRouteRouteWithChildren
+  LayoutErrorRouteRoute: typeof LayoutErrorRouteRouteWithChildren
   LayoutSystemRouteRoute: typeof LayoutSystemRouteRouteWithChildren
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutAboutIndexRoute: typeof LayoutAboutIndexRoute
@@ -225,6 +368,8 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAccountRouteRoute: LayoutAccountRouteRouteWithChildren,
+  LayoutErrorRouteRoute: LayoutErrorRouteRouteWithChildren,
   LayoutSystemRouteRoute: LayoutSystemRouteRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutAboutIndexRoute: LayoutAboutIndexRoute,

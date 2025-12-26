@@ -6,8 +6,8 @@ import { fetchGetUserInfo, fetchLogin } from "../api/auth";
 import { QUERY_KEYS } from "../keys";
 
 export function useLogin() {
-  return useMutation<Api.Auth.LoginToken, Error, Api.Auth.LoginParams>({
-    mutationFn: (params) => fetchLogin(params),
+  return useMutation({
+    mutationFn: (params: Api.Auth.LoginParams) => fetchLogin(params),
     retry: false,
   });
 }
@@ -17,15 +17,17 @@ export function useUserInfo() {
   return useQuery({
     enabled: hasToken,
     gcTime: Infinity,
-    placeholderData: () =>
-      ({
-        avatar: "",
+    placeholderData: () => ({
+      code: 0,
+      msg: "",
+      data: {
         buttons: [],
         name: "",
         roles: [],
         userId: "",
-        userName: "",
-      }),
+        username: "",
+      },
+    }),
     queryFn: fetchGetUserInfo,
     queryKey: QUERY_KEYS.AUTH.USER_INFO,
     retry: false,

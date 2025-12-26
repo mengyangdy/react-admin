@@ -57,13 +57,11 @@ export const authActions = {
           localStg.set("token", data.data.token);
           localStg.set("refreshToken", data.data.refreshToken);
           const { data: info, error } = await refetchUserInfo();
-          console.log("🚀 ~ :60 ~ toLogin ~ error:", error);
-          console.log("🚀 ~ :60 ~ toLogin ~ info:", info);
           if (!error && info) {
             const previousUserId = localStg.get("previousUserId");
             localStg.set("userInfo", info);
             authActions.setToken(data.data.token);
-            if (previousUserId !== info.userId || !previousUserId) {
+            if (previousUserId !== info.data.userId || !previousUserId) {
               localStg.remove("globalTabs");
               replace({
                 to: globalConfig.homePath,
@@ -74,7 +72,7 @@ export const authActions = {
               });
             }
             window.$notification?.success({
-              description: `欢迎回来，${info.userName}`,
+              description: `欢迎回来，${info.data.username}`,
               title: "登录成功",
             });
           } else {

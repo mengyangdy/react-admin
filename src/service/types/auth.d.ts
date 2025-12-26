@@ -13,5 +13,16 @@ declare namespace Api {
         refreshToken: string;
       };
     }
+    interface UserInfoResponse {
+      code: number;
+      msg: string;
+      data: {
+        userId: string;
+        username: string;
+        name: string;
+        buttons: string[];
+        roles: string[];
+      };
+    }
   }
 }

@@ -1,5 +1,10 @@
 import request from "../request";
 
-export function fetchGetUserList(data) {
-	return request.get("/user/list", data);
+export function fetchGetUserList(data: Api.SystemManage.UserSearchParams) {
+  return request.get<Api.SystemManage.SystemUserResponse>(
+    "/systemManage/getUserList",
+    {
+      params: data,
+    }
+  );
 }

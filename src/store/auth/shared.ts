@@ -4,15 +4,6 @@ export function getToken() {
   return localStg.get("token") || "";
 }
 
-export interface UserInfoResponse {
-  userId: string;
-  userName: string;
-  name: string;
-  avatar: string;
-  buttons: string[];
-  roles: string[];
-}
-
 export function clearAuthStorage() {
   localStg.remove("token");
   localStg.remove("refreshToken");
