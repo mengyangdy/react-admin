@@ -25,7 +25,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="用户名"
-						name="userName"
+						name="username"
 					>
 						<Input placeholder="请输入用户名" />
 					</Form.Item>
@@ -38,7 +38,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="性别"
-						name="usergender"
+						name="gender"
 					>
 						<Select
 							allowClear
@@ -55,7 +55,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="昵称"
-						name="nickName"
+						name="nickname"
 					>
 						<Input placeholder="请输入昵称" />
 					</Form.Item>
@@ -68,7 +68,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="手机号"
-						name="userPhone"
+						name="phone"
 					>
 						<Input placeholder="请输入手机号" />
 					</Form.Item>
@@ -81,7 +81,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="邮箱"
-						name="userEmail"
+						name="email"
 					>
 						<Input placeholder="请输入邮箱" />
 					</Form.Item>
@@ -94,7 +94,7 @@ const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search, searchPara
 					<Form.Item
 						className="m-0"
 						label="用户状态"
-						name="userStatus"
+						name="status"
 					>
 						<Select
 							allowClear

@@ -20,13 +20,21 @@ function User() {
   const isMobile = useGetIsMobile();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
 
-  const { searchProps, refetch, tableProps } = useTable({
+  const {
+    searchProps,
+    getData,
+    tableProps,
+    loading,
+    columnChecks,
+    setColumnChecks,
+  } = useTable({
     queryKey: QUERY_KEYS.SYSTEM_MANAGE.USER.LIST,
     apiFn: fetchGetUserListByDemo,
     apiParams: {
       current: 1,
       size: 10,
       username: null,
+      nickname: null,
       status: null,
       email: null,
       gender: null,
@@ -136,15 +144,19 @@ function User() {
     onBatchDeleted,
     onDeleted,
     rowSelection,
-  } = useTableOperate(tableProps.dataSource, refetch, async (res, type) => {
-    if (type === "add") {
-      // add request 调用新增的接口
-      console.log(res);
-    } else {
-      // edit request 调用编辑的接口
-      console.log(res);
+  } = useTableOperate(
+    tableProps.dataSource || [],
+    getData,
+    async (res, type) => {
+      if (type === "add") {
+        // add request 调用新增的接口
+        console.log(res);
+      } else {
+        // edit request 调用编辑的接口
+        console.log(res);
+      }
     }
-  });
+  );
 
   async function handleBatchDelete() {
     // request
@@ -164,7 +176,7 @@ function User() {
   }
 
   return (
-    <div className="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
       <Collapse
         bordered={false}
         className="card-wrapper"
@@ -177,22 +189,23 @@ function User() {
           },
         ]}
       />
-      {/*         extra={
-          <TableHeaderOperation
-            add={handleAdd}
-            columns={columnChecks}
-            disabledDelete={checkedRowKeys.length === 0}
-            loading={tableProps.loading}
-            refresh={run}
-            setColumnChecks={setColumnChecks}
-            onDelete={handleBatchDelete}
-          />
-        } */}
+
       <Card
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
         ref={tableWrapperRef}
         title="用户列表"
         variant="borderless"
+        extra={
+          <TableHeaderOperation
+            add={handleAdd}
+            columns={columnChecks}
+            disabledDelete={checkedRowKeys.length === 0}
+            loading={loading}
+            refresh={getData}
+            setColumnChecks={setColumnChecks}
+            onDelete={handleBatchDelete}
+          />
+        }
       >
         <Table
           rowSelection={rowSelection}

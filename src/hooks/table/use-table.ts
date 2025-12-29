@@ -1,8 +1,4 @@
-import {
-  keepPreviousData,
-  type QueryKey,
-  useQuery,
-} from "@tanstack/react-query";
+import { type QueryKey, useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import type { TablePaginationConfig, TableProps } from "antd";
 import { Form } from "antd";
@@ -237,9 +233,9 @@ export function useTable<A extends ApiFn>({
     queryKey: [queryKey, fetchParams],
     queryFn: () => apiFn(fetchParams),
     enabled: immediate,
-    placeholderData: keepPreviousData,
+    // placeholderData: keepPreviousData,
   });
-  // 数据加工
+  // 数据加工 - 使用稳定的依赖项避免不必要的重新计算
   const tableData = useMemo(() => {
     const records = data?.data?.records ?? [];
     const total = data?.data?.total ?? 0;
@@ -253,9 +249,43 @@ export function useTable<A extends ApiFn>({
       })),
       total,
     };
-  }, [data, pagination]);
+  }, [data, pagination.current, pagination.size]);
   // Memo Columns防止 Table 频繁重渲染
-  const finalColumns = useMemo(() => columnsFactory(), [columnsFactory]);
+  const columns = useMemo(() => columnsFactory() || [], [columnsFactory]);
+
+  const [columnChecks, setColumnChecks] = useState<
+    AntDesign.TableColumnCheck[]
+  >([]);
+
+  useEffect(() => {
+    if (columns.length > 0 && columnChecks.length === 0) {
+      setColumnChecks(
+        columns
+          .map((item) => {
+            if ("title" in item && "dataIndex" in item) {
+              return {
+                key: item.dataIndex as string,
+                title: item.title as string,
+                checked: true,
+              };
+            }
+            return null;
+          })
+          .filter(Boolean) as AntDesign.TableColumnCheck[]
+      );
+    }
+  }, [columns, columnChecks.length]);
+
+  const finalColumns = useMemo(() => {
+    return columns.filter((item) => {
+      if ("dataIndex" in item) {
+        const check = columnChecks.find((c) => c.key === item.dataIndex);
+        return check ? check.checked : true;
+      }
+      return true;
+    });
+  }, [columns, columnChecks]);
+
   // Antd Table onChange 回调
   const handleTableChange: TableProps<TableRecord<A>>["onChange"] = (
     pg,
@@ -307,16 +337,28 @@ export function useTable<A extends ApiFn>({
     setTableFilters({});
   };
 
+  // 刷新/获取数据函数，兼容 useTableOperate
+  const getData = async (isResetCurrent?: boolean) => {
+    if (isResetCurrent) {
+      setPagination((p) => ({ ...p, current: 1 }));
+    }
+    await refetch();
+  };
+
   // 返回值
   return {
     form,
     search,
     reset,
-    refetch,
+    getData,
+    loading: isFetching,
+    columnChecks,
+    setColumnChecks,
     searchProps: {
       form,
       search,
       reset,
+      searchParams: filters,
       fetchParams: fetchParams,
     },
     tableProps: {
@@ -325,24 +367,23 @@ export function useTable<A extends ApiFn>({
       columns: finalColumns,
       dataSource: tableData.list,
       onChange: handleTableChange,
-      pagination:
-        paginationConfig === false
-          ? false
-          : {
-              current: pagination.current,
-              pageSize: pagination.size,
-              total: tableData.total,
-              showSizeChanger: true,
-              pageSizeOptions: ["10", "20", "50", "100"],
-              simple: isMobile,
-              ...paginationConfig,
-            },
-    },
+      pagination: (paginationConfig === false
+        ? false
+        : {
+            current: pagination.current,
+            pageSize: pagination.size,
+            total: tableData.total,
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "50", "100"],
+            simple: isMobile,
+            ...paginationConfig,
+          }) as TablePaginationConfig | false,
+    } as TableProps<TableRecord<A>>,
   };
 }
 
 export function useTableOperate<T extends TableData = TableData>(
-  data: T[],
+  data: readonly T[],
   getData: (isResetCurrent?: boolean) => Promise<void>,
   executeResActions: (res: T, operateType: AntDesign.TableOperateType) => void
 ) {

@@ -1,60 +1,92 @@
 declare namespace AntDesign {
-	type TableColumnType<T> = import("antd").TableColumnType<T>;
-	type TableColumnGroupType<T> = import("antd").TableColumnGroupType<T>;
-	type TablePaginationConfig = import("antd").TablePaginationConfig;
-	type TableColumnCheck = import("@sa/hooks").TableColumnCheck;
-	type TableProps = import("antd").TableProps;
-	type TableDataWithIndex<T> = import("@sa/hooks").TableDataWithIndex<T>;
-	type FlatResponseData<T> = import("@sa/axios").FlatResponseData<T>;
+  type TableColumnType<T> = import("antd").TableColumnType<T>;
+  type TableColumnGroupType<T> = import("antd").TableColumnGroupType<T>;
+  type TablePaginationConfig = import("antd").TablePaginationConfig;
+  type TableColumnCheck = {
+    checked: boolean;
+    key: string;
+    title: string;
+  };
+  type TableProps = import("antd").TableProps;
+  type TableDataWithIndex<T> = import("@sa/hooks").TableDataWithIndex<T>;
 
-	type TableData = Api.Common.CommonRecord<object>;
+  type FlatResponseSuccessData<T = any, ResponseData = any> = {
+    data: T;
+    error: null;
+    response: AxiosResponse<ResponseData>;
+  };
+  type FlatResponseFailData<ResponseData = any> = {
+    data: null;
+    error: AxiosError<ResponseData>;
+    response: AxiosResponse<ResponseData>;
+  };
+  type FlatResponseData<T = any, ResponseData = any> =
+    | FlatResponseSuccessData<T, ResponseData>
+    | FlatResponseFailData<ResponseData>;
 
-	/**
-	 * the custom column key
-	 *
-	 * if you want to add a custom column, you should add a key to this type
-	 */
-	type CustomColumnKey = "operate";
+  type TableData = Api.Common.CommonRecord<object>;
 
-	type SetTableColumnKey<C, T> = Omit<C, "key"> & { key?: keyof T | CustomColumnKey };
+  /**
+   * the custom column key
+   *
+   * if you want to add a custom column, you should add a key to this type
+   */
+  type CustomColumnKey = "operate";
 
-	type TableColumn<T> =
-		| SetTableColumnKey<TableColumnType<T>, T>
-		| SetTableColumnKey<TableColumnGroupType<T>, T>;
+  type SetTableColumnKey<C, T> = Omit<C, "key"> & {
+    key?: keyof T | CustomColumnKey;
+  };
 
-	type TableApiFn<T = any, R = Api.Common.CommonSearchParams> = (
-		params: R,
-	) => Promise<App.Service.Response<Api.Common.PaginatingQueryRecord<T>>["data"]>;
+  type TableColumn<T> =
+    | SetTableColumnKey<TableColumnType<T>, T>
+    | SetTableColumnKey<TableColumnGroupType<T>, T>;
 
-	/**
-	 * the type of table operation
-	 *
-	 * - add: add table item
-	 * - edit: edit table item
-	 */
-	type TableOperateType = "add" | "edit";
+  type TableApiFn<T = any, R = Api.Common.CommonSearchParams> = (
+    params: R
+  ) => Promise<
+    App.Service.Response<Api.Common.PaginatingQueryRecord<T>>["data"]
+  >;
 
-	type TableOnChange = Parameters<NonNullable<TableProps["onChange"]>>;
+  /**
+   * the type of table operation
+   *
+   * - add: add table item
+   * - edit: edit table item
+   */
+  type TableOperateType = "add" | "edit";
 
-	type GetTableData<A extends TableApiFn> = A extends TableApiFn<infer T> ? T : never;
+  type TableOnChange = Parameters<NonNullable<TableProps["onChange"]>>;
 
-	type AntDesignTableConfig<A extends TableApiFn> = Pick<
-		import("@sa/hooks").TableConfig<
-			A,
-			GetTableData<A>,
-			TableColumn<TableDataWithIndex<GetTableData<A>>>
-		>,
-		"apiFn" | "apiParams" | "columns" | "immediate" | "isChangeURL" | "transformParams"
-	> & {
-		onChange?: (
-			...args: TableOnChange
-		) =>
-			| undefined
-			| import("@sa/hooks").TableConfig<
-					A,
-					GetTableData<A>,
-					TableColumn<TableDataWithIndex<GetTableData<A>>>
-			  >["apiParams"];
-		rowKey?: keyof GetTableData<A> | ((record: GetTableData<A>) => string | number);
-	} & Omit<TableProps, "columns" | "dataSource" | "loading" | "onChange" | "rowKey">;
+  type GetTableData<A extends TableApiFn> =
+    A extends TableApiFn<infer T> ? T : never;
+
+  type AntDesignTableConfig<A extends TableApiFn> = Pick<
+    import("@sa/hooks").TableConfig<
+      A,
+      GetTableData<A>,
+      TableColumn<TableDataWithIndex<GetTableData<A>>>
+    >,
+    | "apiFn"
+    | "apiParams"
+    | "columns"
+    | "immediate"
+    | "isChangeURL"
+    | "transformParams"
+  > & {
+    onChange?: (
+      ...args: TableOnChange
+    ) =>
+      | undefined
+      | import("@sa/hooks").TableConfig<
+          A,
+          GetTableData<A>,
+          TableColumn<TableDataWithIndex<GetTableData<A>>>
+        >["apiParams"];
+    rowKey?:
+      | keyof GetTableData<A>
+      | ((record: GetTableData<A>) => string | number);
+  } & Omit<
+      TableProps,
+      "columns" | "dataSource" | "loading" | "onChange" | "rowKey"
+    >;
 }

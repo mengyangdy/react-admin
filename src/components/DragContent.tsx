@@ -7,6 +7,7 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Checkbox } from "antd";
 import type React from "react";
 import type { FC } from "react";
 

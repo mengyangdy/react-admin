@@ -11,6 +11,7 @@ const demoRequest = createOtherServiceRequest("demo", {
 export function fetchGetUserListByDemo(
   data: Api.SystemManage.UserSearchParams
 ) {
+  console.log(1111);
   return demoRequest.get<Api.SystemManage.SystemUserResponse>(
     "/systemManage/getUserList",
     {
