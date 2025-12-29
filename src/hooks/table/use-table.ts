@@ -205,7 +205,11 @@ export function useTable<A extends ApiFn>({
         }
       });
 
-      return params;
+      return Object.fromEntries(
+        Object.entries(params).filter(
+          ([_, value]) => value !== null && value !== undefined && value !== ""
+        )
+      );
     },
     // 当 URL 变化时触发的回调
     onURLChange(next) {

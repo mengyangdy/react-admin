@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 
 import { globalConfig } from "@/config";
-
+import { trimParams } from "@/utils/common"
 // 1. 定义一个自定义的接口，覆盖默认的 get/post/put/delete 方法
 interface CustomAxiosInstance extends Omit<
   AxiosInstance,
@@ -42,9 +42,16 @@ const request = axios.create({
   },
 }) as unknown as CustomAxiosInstance;
 
-// 2. 请求拦截器：注入 Token
+// 2. 请求拦截器：注入 Token + 全局 Trim 去空格
 request.interceptors.request.use(
   (config) => {
+    if (config.params) {
+      config.params = trimParams(config.params);
+    }
+    if (config.data && !(config.data instanceof FormData)) {
+      config.data = trimParams(config.data);
+    }
+
     // 假设 Token 存在 localStorage 或 Zustand 中
     const token = localStorage.getItem("token");
     if (token && config.headers) {
@@ -113,6 +120,12 @@ export function createOtherServiceRequest(
   // 复用相同的请求拦截器
   otherRequest.interceptors.request.use(
     (config) => {
+      if (config.params) {
+        config.params = trimParams(config.params);
+      }
+      if (config.data && !(config.data instanceof FormData)) {
+        config.data = trimParams(config.data);
+      }
       const token = localStorage.getItem("token");
       if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
